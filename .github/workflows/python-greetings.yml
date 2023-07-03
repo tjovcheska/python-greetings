@@ -1,0 +1,61 @@
+name: Python Greetings Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-docker-image:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build
+  deploy-dev:
+    runs-on: self-hosted
+    needs: [build-docker-image]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy
+        with:
+          environment: 'dev'
+  api-integration-tests-dev:
+    runs-on: self-hosted
+    needs: [deploy-dev]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/test
+        with:
+          environment: 'DEV'
+  deploy-stg:
+    runs-on: self-hosted
+    needs: [api-integration-tests-dev]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy
+        with:
+          environment: 'stg'
+  api-integration-tests-stg:
+    runs-on: self-hosted
+    needs: [deploy-stg]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/test
+        with:
+          environment: 'STG'
+  deploy-prod:
+    runs-on: self-hosted
+    needs: [api-integration-tests-stg]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy
+        with:
+          environment: 'prod'
+  api-integration-tests-prd:
+    runs-on: self-hosted
+    needs: [deploy-prd]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/test
+        with:
+          environment: 'PROD'

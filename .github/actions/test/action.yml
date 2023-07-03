@@ -1,0 +1,14 @@
+name: 'Run API tests'
+description: 'Action to run API integration tests against Python Greeting Application'
+inputs:
+  environment:
+    description: 'Environment where to run Python Greetings Application API tests'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "API tests triggered on ${{ inputs.environment }} environment"
+      shell: bash
+    - name: Run API Tests
+      run: docker run --network=host --rm teodorajovcheska7/api-tests:latest run greetings greetings_${environment}
+      shell: bash

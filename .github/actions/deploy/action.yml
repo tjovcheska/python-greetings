@@ -1,0 +1,20 @@
+name: 'Deploy Python Greetings Application'
+description: 'Action to deploy Python Greetings Application on a specified environment'
+inputs:
+  environment:
+    description: 'Environment where to deploy Python Greetings Application'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "Deploying Python microservice to ${{ inputs.environment}} environment"
+      shell: bash
+    - name: Stop previous container
+      run: docker-compose stop python-greetings-${{ inputs.environment}}
+      shell: bash
+    - name: Remove stopped container
+      run: docker-compose rm python-greetings-${{ inputs.environment}}
+      shell: bash
+    - name: Run new container
+      run: docker-compose up -d python-greetings-${{ inputs.environment}}
+      shell: bash
