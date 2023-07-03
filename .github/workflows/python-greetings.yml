@@ -21,7 +21,7 @@ jobs:
           environment: 'dev'
   tests-on-dev:
     runs-on: self-hosted
-    needs: [deploy-dev]
+    needs: [deploy-to-dev]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test
@@ -29,7 +29,7 @@ jobs:
           environment: 'DEV'
   deploy-to-stg:
     runs-on: self-hosted
-    needs: [api-integration-tests-dev]
+    needs: [tests-on-dev]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy
@@ -37,7 +37,7 @@ jobs:
           environment: 'stg'
   tests-on-stg:
     runs-on: self-hosted
-    needs: [deploy-stg]
+    needs: [deploy-to-stg]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test
@@ -45,7 +45,7 @@ jobs:
           environment: 'STG'
   deploy-to-prod:
     runs-on: self-hosted
-    needs: [api-integration-tests-stg]
+    needs: [tests-on-stg]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy
@@ -53,7 +53,7 @@ jobs:
           environment: 'prod'
   tests-on-prod:
     runs-on: self-hosted
-    needs: [deploy-prod]
+    needs: [deploy-to-prod]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test
