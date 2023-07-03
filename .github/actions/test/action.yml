@@ -13,5 +13,5 @@ runs:
       run: docker pull teodorajovcheska7/api-tests:latest
       shell: bash
     - name: Run API Tests
-      run: docker run --network=host --rm teodorajovcheska7/api-tests:latest run greetings greetings_${environment}
+      run: docker run --network=host --rm teodorajovcheska7/api-tests:latest run greetings greetings_${{ inputs.environment }}
       shell: bash
