@@ -45,7 +45,7 @@ jobs:
           environment: 'stg'
   deploy-to-prod:
     runs-on: self-hosted
-    # needs: [tests-on-stg]
+    needs: [tests-on-stg]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy
