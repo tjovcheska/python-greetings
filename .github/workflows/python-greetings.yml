@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
-  deploy-dev:
+  deploy-to-dev:
     runs-on: self-hosted
     needs: [build-docker-image]
     steps:
@@ -19,7 +19,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           environment: 'dev'
-  api-integration-tests-dev:
+  tests-on-dev:
     runs-on: self-hosted
     needs: [deploy-dev]
     steps:
@@ -27,7 +27,7 @@ jobs:
       - uses: ./.github/actions/test
         with:
           environment: 'DEV'
-  deploy-stg:
+  deploy-to-stg:
     runs-on: self-hosted
     needs: [api-integration-tests-dev]
     steps:
@@ -35,7 +35,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           environment: 'stg'
-  api-integration-tests-stg:
+  tests-on-stg:
     runs-on: self-hosted
     needs: [deploy-stg]
     steps:
@@ -43,7 +43,7 @@ jobs:
       - uses: ./.github/actions/test
         with:
           environment: 'STG'
-  deploy-prod:
+  deploy-to-prod:
     runs-on: self-hosted
     needs: [api-integration-tests-stg]
     steps:
@@ -51,7 +51,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           environment: 'prod'
-  api-integration-tests-prod:
+  tests-on-prod:
     runs-on: self-hosted
     needs: [deploy-prod]
     steps:

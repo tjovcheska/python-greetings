@@ -8,9 +8,6 @@ runs:
     - name: Build the Docker image
       run: docker build --no-cache -t teodorajovcheska7/python-greetings:latest .
       shell: bash
-    - name: Runnning unit tests for node application
-      run: docker run --rm --entrypoint=npm teodorajovcheska7/python-greetings:latest run test
-      shell: bash
     - name: Push the Docker image to Docker Hub
       run: docker push teodorajovcheska7/python-greetings:latest .
       shell: bash

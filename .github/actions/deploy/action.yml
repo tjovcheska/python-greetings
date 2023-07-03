@@ -9,6 +9,9 @@ runs:
   steps:
     - run: echo "Deploying Python microservice to ${{ inputs.environment}} environment"
       shell: bash
+    - name: Pull latest Python Greetings Application image from Docker Hub
+      run: docker pull teodorajovcheska7/python-greetings:latest
+      shell: bash
     - name: Stop previous container
       run: docker-compose stop python-greetings-${{ inputs.environment}}
       shell: bash
