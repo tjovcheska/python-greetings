@@ -13,7 +13,7 @@ runs:
       run: docker pull teodorajovcheska7/python-greetings:latest
       shell: bash
     - name: Stop previous container
-      run: docker-compose stop python-greetings-${{ inputs.environment}}
+      run: docker-compose stop greetings-app-${{ inputs.environment}}
       shell: bash
     - name: Remove stopped container
       run: docker-compose rm greetings-app-${{ inputs.environment}}
