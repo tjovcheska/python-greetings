@@ -41,15 +41,15 @@ pipeline {
 
 def build_and_push_docker_image(){
     echo "Building and pushing the Docker image to Docker Hub"
-    sh "docker build --no-cache -t teodorajovcheska7/python-greetings:latest ."
+    sh "docker build --no-cache -t teodorajovcheska7/python-greetings-app:latest ."
 
     echo "Push the Docker image to Docker Hub"
-    sh "docker push teodorajovcheska7/python-greetings:latest"
+    sh "docker push teodorajovcheska7/python-greetings-app:latest"
 }
 
 def deploy(String environment){
     echo "Deploying Python microservice to ${environment} environment"
-    sh "docker pull teodorajovcheska7/python-greetings:latest"
+    sh "docker pull teodorajovcheska7/python-greetings-app:latest"
     sh "docker-compose stop greetings-app-${environment}"
     sh "docker-compose rm greetings-app-${environment}"
     sh "docker-compose up -d greetings-app-${environment}"
