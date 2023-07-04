@@ -6,8 +6,8 @@ runs:
     - run: echo "Building and pushing the Docker image to Docker Hub"
       shell: bash
     - name: Build the Docker image
-      run: docker build --no-cache -t teodorajovcheska7/python-greetings:latest .
+      run: docker build --no-cache -t teodorajovcheska7/python-greetings-app:latest .
       shell: bash
     - name: Push the Docker image to Docker Hub
-      run: docker push teodorajovcheska7/python-greetings:latest
+      run: docker push teodorajovcheska7/python-greetings-app:latest
       shell: bash
